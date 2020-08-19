@@ -1,4 +1,4 @@
-// import types from './contacts.types';
+import types from './contacts.types';
 
 const initial_state = {
     contactList : [
@@ -22,13 +22,13 @@ const initial_state = {
 }
 
 const contactReducer = (state = initial_state , action) => {
-    const {type} = action
+    const {type , payload} = action
     switch(type){
-        // case types.ADD_CONTACT :
-        //     return {
-        //         ...state,
-        //         contactList : [...state.contactList , payload]
-        //     }
+        case types.ADD_CONTACT :
+            return {
+                ...state,
+                contactList : [...state.contactList , payload]
+            }
 
         default :
             return state ;

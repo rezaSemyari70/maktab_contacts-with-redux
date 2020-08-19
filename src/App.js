@@ -14,6 +14,8 @@ import {Container} from "@material-ui/core";
 import store from './redux/store';
 import {Provider} from 'react-redux';
 import InfoContact from "./Components/Contacts/InfoContact/InfoContact";
+import FormContact from './Views/FormContact/FormContact';
+
 const App = (props) => {
 
     const [isOpen , setIsOpen] = useState(false);
@@ -25,7 +27,9 @@ const App = (props) => {
                 <Router>
                     <div>
                         <Navbar className="pl-5"  light expand="md">
-                            <NavbarBrand className="text-light" to="/">Contacts</NavbarBrand>
+                            <NavbarBrand className="text-light" to="/">
+                            <Link className="nav-link text-light" to="/">Contacts</Link>
+                            </NavbarBrand>
                             <NavbarToggler onClick={toggle}/>
                             <Collapse isOpen={isOpen} navbar>
                                 <Nav className="mr-auto text-light" navbar>
@@ -46,9 +50,9 @@ const App = (props) => {
                                 <ContactList/>
                             </Route>
                             <Route exact path="/add">
-                              <InfoContact/>
+                              <FormContact/>
                             </Route>
-                            <Route path="/"></Route>
+                            <Route exact path="/"></Route>
                         </Switch>
                     </div>
                 </Router>

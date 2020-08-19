@@ -15,7 +15,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import './ContactList.css';
 import {connect} from 'react-redux';
-import {Link} from 'react-router-dom';
+// import {Link} from 'react-router-dom';
 
 const useStyles = makeStyles({
 
