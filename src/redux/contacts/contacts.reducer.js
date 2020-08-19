@@ -35,6 +35,11 @@ const contactReducer = (state = initial_state , action) => {
                     ...state,
                     contactList : state.contactList.map(item=> item.id == payload.id ? payload : item)
                 }
+                case types.DELETE_CONTACT :
+                    return {
+                        ...state,
+                        contactList : state.contactList.filter(item=> item.id !== payload)
+                    }
 
         default :
             return state ;

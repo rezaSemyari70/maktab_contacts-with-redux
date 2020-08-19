@@ -13,3 +13,10 @@ export const editContact = (contact) => {
         payload : contact
     }
 }
+
+export const deleteContact = (contact) => {
+    return {
+        type : types.DELETE_CONTACT,
+        payload : contact
+    }
+}

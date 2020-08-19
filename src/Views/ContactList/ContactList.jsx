@@ -1,4 +1,4 @@
-import React from 'react';
+import React , { useState }  from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -12,20 +12,40 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-
+// import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import DeleteIcon from '@material-ui/icons/Delete';
+import Swal from 'sweetalert2'
+import {deleteContact} from '../../redux/contacts/contacts.actions';
 import './ContactList.css';
 import {connect} from 'react-redux';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 // import {Link} from 'react-router-dom';
 
 const useStyles = makeStyles({
 
     header: {
         background: 'linear-gradient(45deg , #17744b, #2db378)'
-    }
+    },
+
+    cancelBtn:{
+        width:'180px'
+    },
+
+    iconDelete: {
+        marginLeft: '20px',
+        marginBottom: '5px',
+        '&:hover': {
+            color: '#ec1649'
+        }
+    },
+
+    
 });
 
-function ContactList({contactList}) {
+function ContactList({conctact , contactList, deleteContact}) {
+    console.log(conctact)
+    // console.log(contactList)
+    
     const classes = useStyles({});
 
     const [expanded,
@@ -38,6 +58,29 @@ function ContactList({contactList}) {
     };
 
 
+    const handleDelete = (id) => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'error',
+            showCancelButton: true,
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'delete it!',
+            confirmButtonColor: '#eee',
+            focusCancel: true
+           
+          }).then((result) => {
+            if (result.value) {
+                deleteContact(id)
+              Swal.fire(
+                'Deleted!',
+                'Your file has been deleted.',
+                'success'
+              )
+            }
+            
+          })
+    }
 
     return (
         <Container>
@@ -64,7 +107,12 @@ function ContactList({contactList}) {
                                         <p>{item.phone}</p>
                                         <p>{item.email}</p>
                                         <p>{item.address}</p>
+                                        
+                                        <div>
                                         <Link to={`update/${item.id}`}>Edit</Link>
+                                            <DeleteIcon fontSize="small" className={classes.iconDelete} onClick={()=>handleDelete(item.id)} />
+                                            
+                                        </div>
                                     </Typography>
                                 </AccordionDetails>
                             </Accordion>
@@ -80,4 +128,4 @@ const mapStateToProps = state => {
     return {contactList: state.contact.contactList}
 }
 
-export default connect(mapStateToProps, {})(ContactList);
+export default connect(mapStateToProps, {deleteContact})(ContactList);

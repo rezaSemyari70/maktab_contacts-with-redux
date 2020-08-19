@@ -18,6 +18,17 @@ nav{
     background-color: rgb(248, 248, 248);
 }
 
+.swal2-styled{
+    color: rgb(94, 94, 94) !important;
+    width: 35% !important;
+    padding: 10px !important;
+    margin: 10px !important;
+}
+
+.swal2-cancel{
+    width: 50% !important;
+}
+
 @media (max-width: 575.98px) {
     th , td {
         font-size: 12px;
