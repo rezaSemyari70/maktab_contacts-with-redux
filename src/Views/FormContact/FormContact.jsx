@@ -8,19 +8,21 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import {ThemeProvider} from '@material-ui/core/styles';
 import {Row, Form} from 'reactstrap';
-import {addContact} from '../../redux/contacts/contacts.actions';
+import {addContact, editContact} from '../../redux/contacts/contacts.actions';
 import {contactId} from '../../redux/contacts/contacts.selectors';
 import {createStructuredSelector} from 'reselect';
 import {connect} from 'react-redux';
 import {useHistory} from 'react-router-dom';
+import {useParams} from 'react-router-dom';
+import {useSelector} from "react-redux";
 import SaveIcon from '@material-ui/icons/Save';
 
 import './FormContact.css';
 
 const useStyles = makeStyles({
-    root: {  
+    root: {
         border: 'none',
-        // background: 'linear-gradient(145deg , #17744b, #2db378)'    
+        // background: 'linear-gradient(145deg , #17744b, #2db378)'
     },
 
     title: {
@@ -29,11 +31,12 @@ const useStyles = makeStyles({
         marginLeft: '10px',
         marginBottom: '20px'
     },
-    inputText:{
+
+    inputText: {
         color: 'red'
     },
-    //  pos: {   marginBottom: 12, },
-    saveBtn:{
+
+    saveBtn: {
         backgroundColor: '#17744b',
         fontWeight: 'bold',
         '&:hover': {
@@ -43,19 +46,35 @@ const useStyles = makeStyles({
     },
     clearForm: {
         color: 'lightgray',
-        '&:hover':{
+        '&:hover': {
             color: 'gray'
         }
     }
 
 });
 
-function FormContact({addContact, contactId}) {
+function FormContact({addContact, contactId, editContact}) {
     const classes = useStyles();
     let history = useHistory();
+    const {id} = useParams();
+    const tempraryContact = useSelector(state => state.contact.contactList.find(item => item.id == id))
 
     const [contact,
-        setContact] = useState({firstname: '', lastname: '', email: '', phone: '', address: ''})
+        setContact] = useState(tempraryContact
+        ? {
+            firstname: tempraryContact.firstname,
+            lastname: tempraryContact.lastname,
+            email: tempraryContact.email,
+            phone: tempraryContact.phone,
+            address: tempraryContact.address
+        }
+        : {
+            firstname: '',
+            lastname: '',
+            email: '',
+            phone: '',
+            address: ''
+        })
 
     const handleChangeContact = (event) => {
         const {name, value} = event.target;
@@ -67,7 +86,13 @@ function FormContact({addContact, contactId}) {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        addContact({
+
+        tempraryContact && editContact({
+            id: tempraryContact.id,
+            ...contact
+        })
+
+        !tempraryContact && addContact({
             id: contactId,
             ...contact
         })
@@ -172,9 +197,8 @@ function FormContact({addContact, contactId}) {
                             variant="outlined"
                             type='reset'
                             size="large"
-                            className={classes.clearForm}
-                            >
-                            Clear 
+                            className={classes.clearForm}>
+                            Clear
                         </Button>
 
                     </CardActions>
@@ -186,4 +210,4 @@ function FormContact({addContact, contactId}) {
 
 const mapStateToProps = createStructuredSelector({contactId})
 
-export default connect(mapStateToProps, {addContact})(FormContact)
+export default connect(mapStateToProps, {addContact, editContact})(FormContact)

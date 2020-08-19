@@ -18,17 +18,18 @@ import FormContact from './Views/FormContact/FormContact';
 
 const App = (props) => {
 
-    const [isOpen , setIsOpen] = useState(false);
+    const [isOpen,
+        setIsOpen] = useState(false);
     const toggle = () => setIsOpen(!isOpen);
 
     return (
         <Provider store={store}>
-            <Container  className="px-0">
+            <Container className="px-0">
                 <Router>
                     <div>
-                        <Navbar className="pl-5"  light expand="md">
+                        <Navbar className="pl-5" light expand="md">
                             <NavbarBrand className="text-light" to="/">
-                            <Link className="nav-link text-light" to="/">Contacts</Link>
+                                <Link className="nav-link text-light" to="/">Contacts</Link>
                             </NavbarBrand>
                             <NavbarToggler onClick={toggle}/>
                             <Collapse isOpen={isOpen} navbar>
@@ -43,14 +44,17 @@ const App = (props) => {
                             </Collapse>
                         </Navbar>
                         <Switch>
-                            <Route exact path="/contacts/:id">
+                            {/* <Route exact path="/contacts/:id">
                                 <InfoContact/>
+                            </Route> */}
+                            <Route exact path="/update/:id">
+                                <FormContact/>
                             </Route>
                             <Route exact path="/contacts">
                                 <ContactList/>
                             </Route>
                             <Route exact path="/add">
-                              <FormContact/>
+                                <FormContact/>
                             </Route>
                             <Route exact path="/"></Route>
                         </Switch>

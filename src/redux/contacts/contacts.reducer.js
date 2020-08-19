@@ -30,6 +30,12 @@ const contactReducer = (state = initial_state , action) => {
                 contactList : [...state.contactList , payload]
             }
 
+            case types.EDIT_CONTACT :
+                return {
+                    ...state,
+                    contactList : state.contactList.map(item=> item.id == payload.id ? payload : item)
+                }
+
         default :
             return state ;
     }

@@ -6,3 +6,10 @@ export const addContact = (contact) => {
         payload : contact
     }
 }
+
+export const editContact = (contact) => {
+    return {
+        type : types.EDIT_CONTACT,
+        payload : contact
+    }
+}

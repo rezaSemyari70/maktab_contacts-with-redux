@@ -15,6 +15,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import './ContactList.css';
 import {connect} from 'react-redux';
+import { Link } from 'react-router-dom';
 // import {Link} from 'react-router-dom';
 
 const useStyles = makeStyles({
@@ -36,6 +37,8 @@ function ContactList({contactList}) {
             : false);
     };
 
+
+
     return (
         <Container>
             <TableContainer className="mt-4" component={Paper}>
@@ -43,9 +46,6 @@ function ContactList({contactList}) {
                     <TableHead className={classes.header}>
                         <TableRow>
                             <th>Table Of Contacts</th>
-                            {/* <th>Phone</th>
-                            <th>Email</th>
-                            <th>Address</th> */}
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -64,6 +64,7 @@ function ContactList({contactList}) {
                                         <p>{item.phone}</p>
                                         <p>{item.email}</p>
                                         <p>{item.address}</p>
+                                        <Link to={`update/${item.id}`}>Edit</Link>
                                     </Typography>
                                 </AccordionDetails>
                             </Accordion>
